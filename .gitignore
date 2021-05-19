@@ -1,4 +1,6 @@
-News/images/avatars/
-News/images/posts/
+News/images/avatars/*.*
+News/images/posts/*.*
 News/venv/
 migrations/
+*/__pycache__/
+__pycache__/
