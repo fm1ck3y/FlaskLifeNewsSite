@@ -1,0 +1,41 @@
+{% extends "main.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/input_forms.css') }}">
+</head>
+
+<form action="/login" method="post">
+    <h3>Авторизация</h3>
+    {% with messages = get_flashed_messages(category_filter=["warning"]) %}
+        {% if messages %}
+        <div class="w3-panel w3-red">
+            {{ messages[0] }}
+        </div>
+        {% endif %}
+        {% endwith %}
+        {% with messages = get_flashed_messages(category_filter=["good"]) %}
+        {% if messages %}
+        <div class="w3-panel w3-green">
+            {{ messages[0] }}
+        </div>
+        {% endif %}
+    {% endwith %}
+    <fieldset>
+        <label for="email" required>E-mail:</label>
+        <input type="email" name="email" title="Мыло">
+        <label for="password" required>Пароль:</label>
+        <input type="password" name="password" title="Пароль">
+
+        <div class="field">
+                <label class="checkbox">
+                    <input type="checkbox">
+                    Запомнить меня
+                </label>
+        </div>
+
+    </fieldset>
+    <button type="submit">Войти</button>
+</form>
+{% endblock %}

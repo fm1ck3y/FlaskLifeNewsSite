@@ -1,0 +1,50 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/users.css') }}">
+</head>
+
+<body>
+	<table class="table" align="center">
+		<thead>
+		<tr>
+			<th>Id</th>
+			<th>Мэил</th>
+			<th>Никнейм</th>
+			<th>Имя</th>
+			<th>Дата регистрации</th>
+			<th>Количество постов</th>
+			<th>Количество комментариев</th>
+			<th>Роль пользователя</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for user in users %}
+		<form action="/update_role_user" method="post" enctype="multipart/form-data">
+			 <input type="hidden" id="user_id" name="user_id" value={{ user['id'] }}>
+			<tr>
+				<td>{{ user['id'] }}</td>
+				<td>{{ user['email'] }}</td>
+				<td>{{ user['username'] }}</td>
+				<td>{{ user['name'] }}</td>
+				<td>{{ user['date_reg'] }}</td>
+				<td>{{ user['posts'].count() }}</td>
+				<td>{{ user['comments'].count() }}</td>
+				<td>
+					<select name="roles" id="roles" {% if user['role'] == 'Administrator' and admin_email == user['email'] %} disabled {% endif %} required>
+							<option value="Administrator" {% if user['role'] == 'Administrator' %} selected {% endif %}>Администратор</option>
+					  		<option value="Moderator" {% if user['role'] == 'Moderator' %} selected {% endif %}>Модератор</option>
+					  		<option value="User" {% if user['role'] == 'User' %} selected {% endif %}>Пользователь</option>
+					</select>
+				</td>
+				<td><button type="submit">Сохранить</button></td>
+			</tr>
+		</form>
+		{% endfor %}
+		</tbody>
+	</table>
+</body>
+
+{% endblock %}

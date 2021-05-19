@@ -1,0 +1,34 @@
+#!/bin/bash
+
+export FLASK_APP=News
+export FLASK_DEBUG=1
+export MYSQL_DATABASE_USERNAME=myuser
+export MYSQL_DATABASE_PASSWORD=mypass
+export MYSQL_DATABASE_HOST=localhost
+export MYSQL_DATABASE_DB=coursework_posts
+export ADMIN_EMAIL=arte.vdovin@gmail.com
+export IMAGE_UPLOADS_POSTS=/home/m1ck3y/PycharmProjects/FlaskNewsSite/News/static/images/posts/
+export IMAGE_UPLOADS_USERS=/home/m1ck3y/PycharmProjects/FlaskNewsSite/News/static/images/avatars/
+
+let migrate=-1
+let run=-1
+
+while [ -n "${1}" ]; do  # пока аргументы есть
+    case "${1}" in
+        --migrate) migrate=1;;
+        --run) run=1;
+    esac    # завершает case
+    shift 1 # смещает параметр влево
+done
+
+if [ ${migrate} -eq 1 ]; then
+    echo "Start flask migration"
+    flask db init
+    flask db migrate -m "Initial migration."
+    flask db upgrade
+    echo "Finish flask migration"
+fi
+
+if [ ${run} -eq 1 ]; then
+    flask run
+fi

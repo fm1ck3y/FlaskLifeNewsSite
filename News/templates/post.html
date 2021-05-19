@@ -1,0 +1,91 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/news.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/post.css') }}">
+</head>
+
+<body>
+    <main class="main columns">
+        <section class="column main-column">
+            <div class="article">
+                <footer class="article-delete">
+                    {% if current_user.can(8) %}
+                        <a href="{{ url_for('main.delete_post',post_id=post['id']) }}">Удалить пост</a>
+                    {% endif %}
+                </footer>
+                <div class="post">
+                    <div class="post-header">
+                      <h1>{{ post['title'] }}</h1>
+                      <div class="dots"><span></span></div>
+                      <footer class="article-info">
+                        <span>Автор: {{ post['author'] }}</span>
+                        <span>Дата публикации: {{ post['date'] }}</span>
+                      </footer>
+                      </div>
+                    <figure>
+                      <img src="{{ url_for('static',filename=post['image_path']) }}">
+                      <figcaption>{{ post['title'] }}</figcaption>
+                    </figure>
+                    <p>{{ post['body'] }}</p>
+                </div><br><br>
+                {% for comment in post['comments'] %}
+                <div class="comment">
+                    <footer class="comment-info">
+                        Дата: {{ comment['date'] }}
+                    </footer>
+                    <img src="{{ url_for('static',filename=comment['author']['avatar_path']) }}" alt="avatar">
+                    <p><span>{{ comment['author']['username'] }}</span></p>
+                    <p>{{ comment['body'] }}</p>
+                     <footer class="comment-delete">
+                    {% if current_user.can(4) %}
+                        <a href="{{ url_for('main.delete_comment',comment_id=comment['id'],post_id=post['id']) }}">Удалить комментарий</a>
+                    {% endif %}
+                    </footer>
+                </div>
+                {% endfor %}
+
+                <form action="/comment" method="post">
+                    <div class="comment_enter">
+                        <input type="hidden" name="post_id" value="{{ post['id'] }}">
+                        <h2>Оставьте свой комментарий</h2>
+                        <textarea name="message" placeholder="Напишите свой комментарий"></textarea>
+                        <button type="submit">Отправить</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </section>
+        <section class="column">
+          {% for obj in right_columns %}
+            <a class="article" href="{{ url_for('main.page_post',post_id= obj['id']) }}">
+                {% if loop.index == 1 %}
+              <figure class="article-image is-3by2">
+                <img src="{{ url_for('static',filename=obj.image_path) }}" alt="">
+              </figure>
+                {% endif %}
+              <div class="article-body">
+                <h2 class="article-title">
+                  {{ obj['title'] }}
+                </h2>
+                <p class="article-content">
+                  {{ obj['body'] }}
+                </p>
+                <footer class="article-info">
+                  <span>Автор: {{ obj['author'] }}</span>
+                  <span>Дата публикации: {{ obj['date'] }}</span>
+                </footer>
+              </div>
+            </a>
+          {% endfor %}
+
+        </section>
+    </main>
+
+
+
+</body>
+{% endblock %}

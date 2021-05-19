@@ -1,0 +1,54 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/input_forms.css') }}">
+</head>
+
+<form action="/signup" method="post">
+    <h3>Регистрация</h3>
+
+    {% with messages = get_flashed_messages(category_filter=["warning"]) %}
+        {% if messages %}
+        <div class="w3-panel w3-red">
+            {{ messages[0] }}
+        </div>
+        {% endif %}
+        {% endwith %}
+        {% with messages = get_flashed_messages(category_filter=["good"]) %}
+        {% if messages %}
+        <div class="w3-panel w3-green">
+            {{ messages[0] }}
+        </div>
+        {% endif %}
+    {% endwith %}
+    <div>
+        <div class="col-1-2">
+            <fieldset>
+                <legend><span class="section">1</span>Основная информация</legend>
+                <label for="name">Имя:</label>
+                <input type="text" name="name" maxlength="20" title="Имя" required>
+                <label for="name">Никнейм:</label>
+                <input type="text" name="username" maxlength="20" title="Имя" required>
+                <label for="email" required>E-mail:</label>
+                <input type="email" name="email" title="Мыло">
+                <label for="password" required>Пароль:</label>
+                <input type="password" name="password" title="Пароль">
+            </fieldset>
+        </div>
+        <div class="col-1-2">
+            <fieldset>
+                <legend><span class="section">2</span>Ваш профиль</legend>
+                <label for="bio">БИО:</label>
+                <textarea name="bio" placeholder="Расскажите о себе"></textarea>
+                <label for="password" required>Фотография:</label>
+                <input type="file" class="custom-file-input" name="image" id="image">
+            </fieldset>
+        </div>
+    </div>
+    <button type="submit">Создать</button>
+</form>
+
+{% endblock %}
