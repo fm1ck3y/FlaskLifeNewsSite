@@ -20,7 +20,11 @@ def create_app():
 
     db = SQLAlchemy(app)
 
+    if not os.path.exists(os.getenv('IMAGE_UPLOADS_POSTS')):
+        os.makedirs(os.getenv('IMAGE_UPLOADS_POSTS'))
 
+    if not os.path.exists(os.getenv('IMAGE_UPLOADS_USERS')):
+        os.makedirs(os.getenv('IMAGE_UPLOADS_USERS'))
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
