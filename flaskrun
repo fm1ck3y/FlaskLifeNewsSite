@@ -7,8 +7,8 @@ export MYSQL_DATABASE_PASSWORD=mypass
 export MYSQL_DATABASE_HOST=localhost
 export MYSQL_DATABASE_DB=coursework_posts
 export ADMIN_EMAIL=arte.vdovin@gmail.com
-export IMAGE_UPLOADS_POSTS=/home/m1ck3y/PycharmProjects/FlaskNewsSite/News/static/images/posts/
-export IMAGE_UPLOADS_USERS=/home/m1ck3y/PycharmProjects/FlaskNewsSite/News/static/images/avatars/
+export IMAGE_UPLOADS_POSTS=full_path_to_posts
+export IMAGE_UPLOADS_USERS=full_path_to_posts
 
 let migrate=-1
 let run=-1
@@ -30,5 +30,5 @@ if [ ${migrate} -eq 1 ]; then
 fi
 
 if [ ${run} -eq 1 ]; then
-    flask run
+    flask run -h 0.0.0.0
 fi
