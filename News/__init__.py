@@ -10,7 +10,7 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'mysecretkey'
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{username}:{password}@{server}/{db}'.format(
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{username}:{password}@{server}/{db}'.format(
         username=os.getenv('MYSQL_DATABASE_USERNAME'),
         password=os.getenv('MYSQL_DATABASE_PASSWORD'),
         server=os.getenv('MYSQL_DATABASE_HOST'),
