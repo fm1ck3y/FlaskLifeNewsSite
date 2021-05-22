@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/input_forms.css') }}">
 </head>
 
-<form action="/signup" method="post">
+<form action="/signup" method="post" enctype="multipart/form-data">
     <h3>Регистрация</h3>
 
     {% with messages = get_flashed_messages(category_filter=["warning"]) %}
